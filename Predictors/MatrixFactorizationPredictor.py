@@ -2,14 +2,12 @@ import numpy as np
 import pandas as pd
 from scipy.sparse.linalg import svds
 
-from Models.MovieData import MovieData
-from Models.Recommender import Recommender
 from Models.UserItemData import UserItemData
 from Predictors.Predictor import Predictor
 
 
 class MatrixFactorizationPredictor(Predictor):
-    
+	
     def fit(self, uim: UserItemData):
         self.rating_matrix = uim.data.pivot(index='userID', columns='movieID', values='rating').fillna(0)
 

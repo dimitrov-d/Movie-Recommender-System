@@ -6,7 +6,7 @@ from Predictors.Predictor import Predictor
 
 class SlopeOnePredictor(Predictor):
     def fit(self, uim: UserItemData):
-        matrix = pd.pivot_table(uim.data, index=["userID"], columns=["movieID"], values="rating").fillna("?")
+        matrix = pd.pivot_table(uim.data, index="userID", columns="movieID", values="rating").fillna("?")
         self.users = matrix.index.values
         self.movies = matrix.columns.values
         self.matrix = matrix
@@ -31,7 +31,7 @@ class SlopeOnePredictor(Predictor):
 
                     dev.append(sum(diff) / len(diff))
                     freq.append(len(diff))
-                pred_dict[movie] = self.get_prediction(userID, dev, freq)
+                pred_dict[movie] = round(self.get_prediction(userID, dev, freq), 1)
         return pred_dict
 
     def get_prediction(self, userID, dev, freq):
@@ -40,4 +40,3 @@ class SlopeOnePredictor(Predictor):
         for de, rm, fre in zip(dev, rated_movies, freq):
             res.append((de + rm) * fre)
         return round(sum(res) / sum(freq), 2)
-        

@@ -1,6 +1,5 @@
 import random
 
-from Models.MovieData import MovieData
 from Models.UserItemData import UserItemData
 from Predictors.Predictor import Predictor
 
@@ -18,14 +17,3 @@ class RandomPredictor(Predictor):
         for movie in self.movies:
             pred_dict[movie] = random.randint(self.min, self.max)
         return pred_dict
-
-
-# md = MovieData('../movielens/movies.dat')
-# uim = UserItemData('../movielens/user_ratedmovies.dat')
-# rp = RandomPredictor(1, 5)
-# rp.fit(uim)
-# pred = rp.predict(78)
-# print(type(pred))
-# items = [1, 3, 20, 50, 100]
-# for item in items:
-#     print("Movie: {}, score: {}".format(md.get_title(item), pred[item]))
