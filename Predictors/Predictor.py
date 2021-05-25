@@ -1,5 +1,6 @@
 from abc import abstractmethod
 
+from Models.MovieTags import MovieTags
 from Models.UserItemData import UserItemData
 
 
@@ -7,10 +8,20 @@ from Models.UserItemData import UserItemData
 class Predictor:
     @abstractmethod
     def fit(self, uim: UserItemData):
-        """Examine and load the model"""
+        # Examine and load the model
+        pass
+
+    @abstractmethod
+    def fit(self, mt: MovieTags):
+        # Use in content based predictor
         pass
 
     @abstractmethod
     def predict(self, uid: int):
-        """Calculate the recommended values for a given user"""
+        # Calculate the recommended values for a given user
+        pass
+
+    @abstractmethod
+    def predict(self, mid: int):
+        # Use in content based predictor
         pass
