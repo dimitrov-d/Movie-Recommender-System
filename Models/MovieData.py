@@ -3,8 +3,7 @@ import pandas as pd
 
 class MovieData:
     def __init__(self, file_path):
-        data = pd.read_csv(file_path, sep="\t")
-        self.data = data
+        self.data = pd.read_csv(file_path, sep="\t")
 
     def get_title(self, movieID):
         movieID = int(movieID)

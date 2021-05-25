@@ -13,7 +13,4 @@ class RandomPredictor(Predictor):
         self.movies = list(set(uim.data['movieID']))
 
     def predict(self, userID):
-        pred_dict = {}
-        for movie in self.movies:
-            pred_dict[movie] = random.randint(self.min, self.max)
-        return pred_dict
+        return {movie: random.randint(self.min, self.max) for movie in self.movies}

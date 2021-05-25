@@ -1,4 +1,5 @@
 import numpy as np
+
 from Predictors.Predictor import Predictor
 
 
@@ -15,8 +16,4 @@ class STDPredictor(Predictor):
         self.ratings_std_dev = ratings[ratings >= 1.5]
 
     def predict(self, userID):
-        pred_dict = {}
-        for movieID, std_dev in zip(self.ratings_std_dev.keys(), self.ratings_std_dev.values):
-            pred_dict[movieID] = std_dev
-
-        return pred_dict
+        return {movieID: std_dev for movieID, std_dev in zip(self.ratings_std_dev.keys(), self.ratings_std_dev.values)}

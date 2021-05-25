@@ -17,7 +17,4 @@ class AveragePredictor(Predictor):
         self.data_avg = (vs + self.b * g_avg) / (n + self.b)
 
     def predict(self, userID):
-        pred_dict = {}
-        for movieID, rating in zip(list(self.data_avg.index), self.data_avg.values):
-            pred_dict[movieID] = rating
-        return pred_dict
+        return {movieID: rating for movieID, rating in zip(list(self.data_avg.index), self.data_avg.values)}

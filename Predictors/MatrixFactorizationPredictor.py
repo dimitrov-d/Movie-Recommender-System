@@ -7,7 +7,7 @@ from Predictors.Predictor import Predictor
 
 
 class MatrixFactorizationPredictor(Predictor):
-	
+    
     def fit(self, uim: UserItemData):
         self.rating_matrix = uim.data.pivot(index='userID', columns='movieID', values='rating').fillna(0)
 
