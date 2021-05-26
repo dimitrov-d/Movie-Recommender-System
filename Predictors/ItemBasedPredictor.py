@@ -1,6 +1,7 @@
+import numpy as np
 import pandas as pd
 from scipy import spatial
-import numpy as np
+
 from Models.MovieData import MovieData
 from Models.UserItemData import UserItemData
 from Predictors.Predictor import Predictor
@@ -39,7 +40,7 @@ class ItemBasedPredictor(Predictor):
                 sim = self.similarity(m, um)
                 nominator.append(sim * rating)
                 denominator = denominator + sim
-            pred_dict[m] = round(sum(nominator / np.float64(denominator)), 1)
+            pred_dict[m] = sum(nominator / np.float64(denominator))
         return pred_dict
 
     def calculate_similarity(self, movie1_ID, movie2_ID):
@@ -51,7 +52,7 @@ class ItemBasedPredictor(Predictor):
             return 0
         m1_ratings = common_ratings['rating_x'].values
         m2_ratings = common_ratings['rating_y'].values
-
+        # Cosine similarity
         cosine_sim = 1 - spatial.distance.cosine(m1_ratings, m2_ratings)
         return 0 if cosine_sim < self.threshold else cosine_sim
 
@@ -69,10 +70,7 @@ class ItemBasedPredictor(Predictor):
             print(f'Movie1: {md.get_title(m1)}, Movie2: {md.get_title(m2)}, similarity: {sim}')
 
     def similarItems(self, movieID, n):
-        similar_dict = {}
-        for movie in self.movies:
-            if movie != movieID:
-                similar_dict[movie] = self.similarity(movie, movieID)
+        similar_dict = {movie: self.similarity(movie, movieID) for movie in self.movies if movie != movieID}
         return sorted(similar_dict.items(), key=lambda item: item[1], reverse=True)[:n]
 
     def self_recommendation(self):
@@ -80,6 +78,6 @@ class ItemBasedPredictor(Predictor):
         me = 99999
         pred_dict = self.predict(me)
         self_rated_movies = self.data[self.data['userID'] == me]['movieID'].values
-        result_dict = {x: pred_dict[x] for x in pred_dict.keys() if x not in self_rated_movies}
+        result_dict = {movie: pred_dict[movie] for movie in pred_dict.keys() if movie not in self_rated_movies}
 
         return sorted(result_dict.items(), key=lambda item: item[1], reverse=True)[:10]

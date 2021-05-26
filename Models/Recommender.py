@@ -68,7 +68,7 @@ class Recommender:
         return predictions_init, predictions_test
 
     def calculate_ratios(self, init_ratings, test_ratings):
-    	# Calculates precision, recall and F1.
+        # Calculates precision, recall and F1.
         # The threshold is the mean of all the ratings
         threshold = np.mean(init_ratings)
         tp = fp = tn = fn = 0

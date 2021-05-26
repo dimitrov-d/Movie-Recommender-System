@@ -24,8 +24,4 @@ class MatrixFactorizationPredictor(Predictor):
         # Convert to dataframe for easier row retrieval
         preds_df = pd.DataFrame(predictions, columns=self.rating_matrix.columns)
 
-        pred_dict = {}
-        for m, pred in enumerate(preds_df.iloc[userID, :]):
-            pred_dict[m] = pred
-
-        return pred_dict
+        return {m: pred for m, pred in enumerate(preds_df.iloc[userID, :])}

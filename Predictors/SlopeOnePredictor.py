@@ -23,15 +23,14 @@ class SlopeOnePredictor(Predictor):
                     if col == movie:
                         continue
                     diff = []
-
+                    # Compare user ratings column-wise for each user (row)
                     for row in self.users:
-                        if self.matrix.loc[row, movie] == "?" or self.matrix.loc[row, col] == "?":
-                            continue
-                        diff.append(self.matrix.loc[row, movie] - self.matrix.loc[row, col])
+                        if not self.matrix.loc[row, movie] == "?" and not self.matrix.loc[row, col] == "?":
+                            diff.append(self.matrix.loc[row, movie] - self.matrix.loc[row, col])
 
                     dev.append(sum(diff) / len(diff))
                     freq.append(len(diff))
-                pred_dict[movie] = round(self.get_prediction(userID, dev, freq), 1)
+                pred_dict[movie] = self.get_prediction(userID, dev, freq)
         return pred_dict
 
     def get_prediction(self, userID, dev, freq):

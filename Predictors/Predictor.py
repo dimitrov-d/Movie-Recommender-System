@@ -8,7 +8,7 @@ from Models.UserItemData import UserItemData
 class Predictor:
     @abstractmethod
     def fit(self, uim: UserItemData):
-        # Examine and load the model
+        # Load and examine the model
         pass
 
     @abstractmethod
